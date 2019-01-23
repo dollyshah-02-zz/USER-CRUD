@@ -1,0 +1,64 @@
+<div>
+    <h1>User CRUD Application</h1>
+</div>
+<div>
+    <li>
+        <a class="lnk" [ngClass]="{'active': showlist}" >Record List</a> &nbsp; |
+        &nbsp;
+    </li>
+    <li>
+        <a class="lnk" [ngClass]="{'active': !showlist}">Add Record</a>
+
+    </li>
+</div>
+
+
+<div>
+    <p *ngIf="showMsg" class="heading">{{msg}}</p>
+    &nbsp;
+
+
+    <div class="container main-table" *ngIf="showlist">
+        <div class="row border-bottom border-top border-right">
+            <div class="col-md-3 border-left">
+                Firstname
+            </div>
+            <div class="col-md-3 border-left">
+                Lastname
+            </div>
+            <div class="col-md-3 border-left">
+                Avatar
+            </div>
+            <div class="col-md-3 border-left">
+                Action
+            </div>
+        </div>
+
+        <div *ngFor="let user of userArray;" class="row border-bottom border-right">
+            <div class="col-md-3 border-left">
+                {{user.first_name}}
+            </div>
+            <div class="col-md-3 border-left">
+                {{user.last_name}}
+            </div>
+            <div class="col-md-3 border-left">
+                <img src="{{user.avatar}}" />
+            </div>
+            <div class="col-md-3 border-left">
+                <a href="">Edit</a> /
+                <a href="">Delete</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page">
+        
+        <button *ngFor="let no of ' '.repeat(page).split(''), let x = index" (click)="clickCount(x) ; showFirst(x+1)"
+             class="btn" [ngClass]="{'btn-focus':count== x}">{{x+1}}</button>
+            <span *ngIf="fetch">{{fetchMsg}}</span>
+        
+    </div>
+
+</div>
+<!-- <app-add-user *ngIf=" !showlist"></app-add-user> -->
