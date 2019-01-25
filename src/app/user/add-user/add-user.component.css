@@ -1,6 +1,11 @@
-.heading{
-    /* margin: 5%; */
-}
 .forminput{
+    margin: 0px;
     width: 50%;
+}
+.button{
+    margin-top: 12px;
+    margin-left: 2px;
+}
+.avatar{
+    margin-top: -10px;
 }

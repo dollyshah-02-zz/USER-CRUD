@@ -1,10 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-import { UserComponent } from './user/user/user.component';
 import { UserModule } from './user/user.module';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './/app-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -13,7 +13,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     UserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule,
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

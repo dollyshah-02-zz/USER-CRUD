@@ -1,4 +1,4 @@
-export class User {
+export interface User {
     id:number;
     first_name:string;
     last_name:string;
@@ -11,4 +11,8 @@ export interface UserInterface {
     total:number,
     total_pages:number,
     data: User[]
+}
+
+export interface EditUser{
+    data: User
 }

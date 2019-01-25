@@ -1,6 +1,20 @@
 .main{
     width: 1000px;
     margin: 0 auto;
-    
-   
+}  
+.list,li{
+    display: inline;
+}
+.lnk{
+    font-weight: normal;
+    color:grey;
+    text-decoration: none;
+}
+.router-link-active {
+    font-weight: bold;
+    color: black;
+    font-style: italic
+}
+.button{
+    margin: 2px;
 }
