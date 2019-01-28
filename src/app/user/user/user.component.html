@@ -1,7 +1,7 @@
 <div>
-    <p *ngIf="showMsg" class="heading">Please wait while we are getting user details...</p>
-    <div class="container main-table" >
-        <div class="row border-bottom border-top border-right">
+    <p *ngIf="showMsg" class="heading">{{statusmsg}}</p>
+    <div class="container main-table">
+        <div class="row border-bottom border-top border-right" *ngIf="!showMsg">
             <div class="col-md-3 border-left">
                 Firstname
             </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="col-md-3 border-left">
                 <a routerLink="/recordlist/{{user.id}}">Edit</a> /
-                <a href="">Delete</a>
+                <a routerLink="/" (click)="deleteUser(user)">Delete</a>
                 <router-outlet></router-outlet>
             </div>
         </div>

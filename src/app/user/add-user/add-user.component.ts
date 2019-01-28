@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
-import { User, UserInterface, User } from 'src/app/user';
+import { User, UserInterface, EditUser, } from 'src/app/user';
 import { Location } from '@angular/common';
 
 @Component({
@@ -10,53 +10,58 @@ import { Location } from '@angular/common';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
-  userEditObject: User;
+  userEditObject: User = new User();
   showAvatar: boolean = true;
   id: string;
-  addUser:User;
-  
-
+  show = false;
+  submitClick = "Submit";
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private location: Location) { }
+    private location: Location) {
+  }
 
   ngOnInit() {
-
     this.activatedRoute.params.subscribe(params => {
-      this.id = params['id']; //(+) converts string 'id' to a number
+      this.id = params['id'];
       this.getUsers();
     });
-    this.getUsers();
   }
+
   getUsers() {
     this.showAvatar = true;
-    console.log(this.userEditObject);
-    console.log("idd", this.id);
     if (this.id == 'new') {
-      console.log("new user");
       this.showAvatar = false;
-      this.userEditObject = null;
-      console.log("add", this.showAvatar);
+      this.userEditObject = new User();
     }
     else {
-      console.log("Edit mode");
+      console.log("edit");
       this.showAvatar = true;
-      console.log("edit", this.showAvatar);
       this.userService.getUser(this.id).subscribe(data => {
         this.userEditObject = data.data;
-        console.log(this.userEditObject);
       });
     }
   }
-  postUser(){
-    // this.userService.postUser()
+  postUser() {
     console.log("post user");
+    this.submitClick = "Please wait..."
+    if (this.id == 'new') {
+      this.userService.postUser(this.userEditObject).subscribe(() => {
+        this.submitClick = "Submit";
+        this.show = true;
+      });
+      console.log(this.userEditObject);
+    }
+    else {
+      console.log("put");
+      this.userService.updateUser(this.userEditObject).subscribe(() => {
+        this.submitClick = "Submit";
+        this.show = false;
+      });
+      this.show = true;
+    }
   }
-
   goBack() {
-    debugger;
     this.location.back();
   }
-
 }
 

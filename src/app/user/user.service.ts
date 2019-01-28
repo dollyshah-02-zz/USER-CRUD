@@ -10,28 +10,35 @@ import { UserInterface, User, EditUser } from '../user';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-  private url = 'https://reqres.in/';
+  private url = 'https://reqres.in/api/users';
 
   getUsers(pageNo): Observable<UserInterface> {
     console.log("above get");
-    return this.http.get<UserInterface>(this.url + "api/users?page=" + pageNo)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this.http.get<UserInterface>(this.url + "?page=" + pageNo).pipe(
+      catchError(this.handleError)
+    );
   }
   //get users for editing
-  getUser(id){
-    return this.http.get<EditUser>(this.url+"api/users/"+id);;
+  getUser(id): Observable<EditUser> {
+    return this.http.get<EditUser>(this.url + "/" + id).pipe(
+      catchError(this.handleError));
   }
-  postUser(user){
-    return this.http.post(this.url+"users",user)
+  postUser(user: User): Observable<User> {
+    console.log("user in post", user);
+    return this.http.post<User>(this.url ,  user).pipe(
+      catchError(this.handleError));
   }
-
-  handleError() {
-    let errorMessage = 'Something went wrong!!Please check your internet connection';
-    window.alert(errorMessage);
-    return throwError(errorMessage);
-  };    // console.log("hi");
+  deleteUser(user: User): Observable<User> {
+    return this.http.delete<User>(this.url + "/" + user.id).pipe(
+      catchError(this.handleError));
+  }
+  updateUser(user: User): Observable<User> {
+    return this.http.put<User>(this.url + "users/" + user.id, user).pipe(
+      catchError(this.handleError));
+  }
+  handleError(error:Response) {
+   return throwError(error);
+  };
 }
 
 
