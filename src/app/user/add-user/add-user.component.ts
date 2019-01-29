@@ -10,56 +10,52 @@ import { Location } from '@angular/common';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent implements OnInit {
-  userEditObject: User = new User();
-  showAvatar: boolean = true;
-  id: string;
-  show = false;
+  userObject: User = new User();
+  isEditMode: boolean = true;
   submitClick = "Submit";
+  id: string;
+ 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private location: Location) {
   }
 
   ngOnInit() {
-    this.activatedRoute.params.subscribe(params => {
-      this.id = params['id'];
+    // console.log("initial",this.userObject);
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.id = params.get('id');
       this.getUsers();
     });
   }
 
   getUsers() {
-    this.showAvatar = true;
     if (this.id == 'new') {
-      this.showAvatar = false;
-      this.userEditObject = new User();
+      this.isEditMode = false;
+      this.userObject = new User();
     }
     else {
-      console.log("edit");
-      this.showAvatar = true;
       this.userService.getUser(this.id).subscribe(data => {
-        this.userEditObject = data.data;
+        this.userObject = data.data;
       });
     }
   }
+
   postUser() {
-    console.log("post user");
     this.submitClick = "Please wait..."
-    if (this.id == 'new') {
-      this.userService.postUser(this.userEditObject).subscribe(() => {
+    if (!this.isEditMode) {
+      console.log("post")
+      this.userService.postUser(this.userObject).subscribe(() => {
         this.submitClick = "Submit";
-        this.show = true;
       });
-      console.log(this.userEditObject);
     }
     else {
       console.log("put");
-      this.userService.updateUser(this.userEditObject).subscribe(() => {
+      this.userService.updateUser(this.userObject).subscribe(() => {
         this.submitClick = "Submit";
-        this.show = false;
       });
-      this.show = true;
     }
   }
+
   goBack() {
     this.location.back();
   }

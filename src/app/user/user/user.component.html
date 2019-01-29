@@ -1,5 +1,5 @@
 <div>
-    <p *ngIf="showMsg" class="heading">{{statusmsg}}</p>
+    <p *ngIf="showMsg " class="heading">{{statusmsg}}</p>
     <div class="container main-table">
         <div class="row border-bottom border-top border-right" *ngIf="!showMsg">
             <div class="col-md-3 border-left">
@@ -15,7 +15,7 @@
                 Action
             </div>
         </div>
-        <div *ngFor="let user of userArray;" class="row border-bottom border-right">
+        <div *ngFor="let user of userI?.data;" class="row border-bottom border-right">
             <div class="col-md-3 border-left">
                 {{user.first_name}}
             </div>
@@ -23,7 +23,7 @@
                 {{user.last_name}}
             </div>
             <div class="col-md-3 border-left">
-                <img src="{{user.avatar}}" />
+                <img src="{{user.avatar}}"/>
             </div>
             <div class="col-md-3 border-left">
                 <a routerLink="/recordlist/{{user.id}}">Edit</a> /
@@ -35,6 +35,6 @@
     <div class="page">
         <button *ngFor="let no of ' '.repeat((userI?.total_pages)).split(''), let x = index" (click)="getUsers(x+1)"
             class="btn" [ngClass]="{'btn-focus':(userI?.page) == x+1}">{{x+1}}</button>
-        <span *ngIf="fetch">Fetching data...</span>
+        <span *ngIf="!showMsg">Fetching data...</span>
     </div>
 </div>
