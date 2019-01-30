@@ -1,7 +1,7 @@
 <div>
-    <p *ngIf="showMsg " class="heading">{{statusmsg}}</p>
+    <p *ngIf="showMsg  && !userI" class="heading">{{statusmsg}}</p>
     <div class="container main-table">
-        <div class="row border-bottom border-top border-right" *ngIf="!showMsg">
+        <div class="row border-bottom border-top border-right" *ngIf="userI">
             <div class="col-md-3 border-left">
                 Firstname
             </div>
@@ -35,6 +35,6 @@
     <div class="page">
         <button *ngFor="let no of ' '.repeat((userI?.total_pages)).split(''), let x = index" (click)="getUsers(x+1)"
             class="btn" [ngClass]="{'btn-focus':(userI?.page) == x+1}">{{x+1}}</button>
-        <span *ngIf="!showMsg">Fetching data...</span>
+        <span *ngIf="showMsg && userI">Fetching data...</span>
     </div>
 </div>
