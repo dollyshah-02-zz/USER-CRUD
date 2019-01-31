@@ -1,6 +1,8 @@
 <div>
-  <h4><b class="heading" *ngIf="!isEditMode">Add User</b></h4>
-  <h4><b class="heading" *ngIf="isEditMode">Edit User</b></h4>
+  <h4>
+    <div *ngIf="id =='new'; else editBlock" class="heading"><b>Add User</b></div>
+    <ng-template #editBlock><b>Edit User</b></ng-template>
+  </h4>
   <form class="container forminput">
     <div class="form-group">
       <label>First Name:</label>
@@ -10,16 +12,21 @@
       <label>Last name</label>
       <input type="text" class="form-control" placeholder="Enter last name" name="last_name" [(ngModel)]="userObject.last_name">
     </div>
-    <div class="form-group" *ngIf="isEditMode">
+    <div class="form-group" *ngIf="id!=='new'">
       <label>Job:</label>
       <input type="text" class="form-control" placeholder="Enter job " name="job" [(ngModel)]="userObject.job">
     </div>
-    <div class="form-group" *ngIf="isEditMode">
-      <label>Avatar:</label></div>
-    <div><img src="{{userObject?.avatar}}"></div>
-    <div [ngClass]="{'button-top':!isEditMode}">
-      <button type="submit" (click)="postUser()" class="btn btn-default button">{{submitClick}}</button>
-      <button type="cancel" (click)="goBack()" class="btn btn-default button">Cancel</button>
+    <div class="form-group" *ngIf="id!=='new'">
+      <label>Avatar:</label>
+      <div><img src="{{userObject?.avatar}}"></div>
+    </div>
+    <div>
+      <button type="submit" (click)="postUser()" class="btn btn-default">
+        <span *ngIf="!submitbuttonToggle" class="button">Submit</span>
+        <span *ngIf="submitbuttonToggle" class="button">Please Wait...</span>
+      </button>
+      <button type="cancel" (click)="goBack()" class="btn btn-default">
+        <span>Cancel</span></button>
     </div>
   </form>
 </div>

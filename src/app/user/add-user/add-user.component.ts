@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../user.service';
-import { User, UserInterface, EditUser, } from 'src/app/user';
+import { User } from 'src/app/user';
 import { Location } from '@angular/common';
 
 @Component({
@@ -11,17 +11,16 @@ import { Location } from '@angular/common';
 })
 export class AddUserComponent implements OnInit {
   userObject: User = new User();
-  isEditMode: boolean = true;
-  submitClick = "Submit";
+  submitbuttonToggle: boolean = false;
   id: string;
- 
+
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private location: Location) {
+    private location: Location,
+    private router: Router) {
   }
 
   ngOnInit() {
-    // console.log("initial",this.userObject);
     this.activatedRoute.paramMap.subscribe(params => {
       this.id = params.get('id');
       this.getUsers();
@@ -30,7 +29,7 @@ export class AddUserComponent implements OnInit {
 
   getUsers() {
     if (this.id == 'new') {
-      this.isEditMode = false;
+
       this.userObject = new User();
     }
     else {
@@ -41,17 +40,19 @@ export class AddUserComponent implements OnInit {
   }
 
   postUser() {
-    this.submitClick = "Please wait..."
-    if (!this.isEditMode) {
-      console.log("post")
+    this.submitbuttonToggle = true;
+    if (this.id == 'new') {
+      console.log("post");
       this.userService.postUser(this.userObject).subscribe(() => {
-        this.submitClick = "Submit";
+        this.submitbuttonToggle = false;
+        this.router.navigateByUrl('/recordlist');
       });
     }
     else {
       console.log("put");
       this.userService.updateUser(this.userObject).subscribe(() => {
-        this.submitClick = "Submit";
+        this.submitbuttonToggle = false;
+        this.router.navigateByUrl('/recordlist');
       });
     }
   }

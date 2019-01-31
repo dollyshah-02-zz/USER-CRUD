@@ -33,7 +33,7 @@ export class UserService {
       catchError(this.handleError));
   }
   updateUser(user: User): Observable<User> {
-    return this.http.put<User>(this.url + "users/" + user.id, user).pipe(
+    return this.http.put<User>(this.url + "/" + user.id, user).pipe(
       catchError(this.handleError));
   }
   handleError(error:Response) {
